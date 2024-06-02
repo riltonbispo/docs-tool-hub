@@ -1,0 +1,79 @@
+---
+  title: Casos de uso
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+<Tabs>
+  <TabItem label="Caso de Uso 1" icon="open-book">
+    ### Acesso à Página de Ferramentas
+
+    ##### Descrição
+    O usuário acessa a página principal da plataforma, onde todas as ferramentas estão disponíveis para visualização.
+
+    ##### Atores
+    - Usuário
+
+    ##### Pré-condições
+    - O usuário deve ter acesso à internet.
+
+    ##### Fluxo Principal
+    1. O usuário acessa a página principal da plataforma.
+    2. O sistema exibe uma lista completa de ferramentas disponíveis.
+
+    ##### Pós-condições
+    - O usuário vê todas as ferramentas disponíveis na plataforma.
+  </TabItem>
+  <TabItem label="Caso de Uso 2" icon="open-book">
+      ### Filtrar Ferramentas por Tags
+
+      ##### Descrição
+      O usuário utiliza filtros por tags para encontrar ferramentas específicas.
+
+      ##### Atores
+      - Usuário
+
+      ##### Pré-condições
+      - O usuário deve ter acesso à internet.
+      - A plataforma deve ter ferramentas cadastradas com tags.
+
+      ##### Fluxo Principal
+      1. O usuário acessa a página principal da plataforma.
+      2. O usuário seleciona uma ou mais tags de interesse.
+      3. O sistema exibe a lista de ferramentas que correspondem às tags selecionadas.
+
+      ##### Pós-condições
+      - O usuário vê a lista de ferramentas filtradas pelas tags selecionadas.
+  </TabItem>
+
+  <TabItem label="Caso de Uso 3" icon="open-book">
+      ### Buscar Ferramentas
+
+      ##### Descrição
+      O usuário utiliza a barra de pesquisa para encontrar uma ferramenta específica.
+
+      ##### Atores
+      - Usuário
+
+      ##### Pré-condições
+      - O usuário deve ter acesso à internet.
+      - A plataforma deve ter ferramentas cadastradas.
+
+      ##### Fluxo Principal
+      1. O usuário acessa a página principal da plataforma.
+      2. O usuário digita o nome ou parte do nome da ferramenta na barra de pesquisa.
+      3. O sistema exibe a lista de ferramentas que correspondem ao termo de busca.
+
+      ##### Fluxo Alternativo
+      1. O sistema não encontra nenhuma ferramenta correspondente ao termo de busca.
+      2. O sistema exibe uma mensagem indicando que nenhuma ferramenta foi encontrada.
+
+      ##### Pós-condições
+      - O usuário vê a lista de ferramentas correspondente ao termo de busca.
+  </TabItem>
+
+</Tabs>
+
+---
+
+Esta documentação de casos de uso visa fornecer um entendimento claro das principais interações dos usuários com a plataforma, de forma simples e direta.
