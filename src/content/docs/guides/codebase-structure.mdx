@@ -57,40 +57,86 @@ import { FileTree } from '@astrojs/starlight/components';
 Caso você queira fazer seus proprios componentes/partials, em nossa estrutura colocamos eles na pasta `src/app/_components`
 
 ### Header
-O Componente Header é um componentes customizado nosso aonde tem um `input` aonde o usario pode pesquisar uma ferramenta, e um `button` para o usario trocar o tema da aplicação.
+O componente Header é um componente customizado onde há um input para o usuário pesquisar uma ferramenta e um button para o usuário trocar o tema da aplicação.
 
 export const exampleCodeHeader = `
 
-  import { Search } from 'lucide-react'
-  import { Input } from '@/components/ui/input'
-  import { ModeToggle } from '@/components/mode-toggle'
+'use client'
 
-  const Header = () => {
-    return (
-      <header className="flex gap-4 mt-8 w-[80%] mx-auto max-w-[70rem]">
-        <div className="relative">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input
-            type="search"
-            placeholder="Search..."
-            className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[320px]"
-          />
-        </div>
-        <ModeToggle />
-      </header>
-    )
+import { Search } from 'lucide-react'
+import { Input } from '@/components/ui/input'
+import { ModeToggle } from '@/components/mode-toggle'
+import { useState } from 'react'
+
+type HeaderProps = {
+  handleSearch: (term: string) => void
+}
+
+const Header = ({ handleSearch }: HeaderProps) => {
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value
+    setSearchTerm(value)
+    handleSearch(value)
   }
 
-  export default Header
+  return (
+    <header className="flex gap-4 mt-8 mx-auto max-w-[70rem] mb-14">
+      <div className="relative">
+        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+        <Input
+          type="search"
+          placeholder="Search..."
+          className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[320px]"
+          value={searchTerm}
+          onChange={handleChange}
+        />
+      </div>
+      <ModeToggle />
+    </header>
+  )
+}
+
+export default Header
+
 `;
 export const fileNameHeader = 'src/app/_componets/Header.tsx';
 
 <Code code={exampleCodeHeader} lang="tsx" title={fileNameHeader}/>
 
+O **Header** recebe como props uma função chamada `handleSearch`, que é chamada sempre que o usuário digita no campo de pesquisa. Essa função é responsável por lidar com o termo de busca inserido pelo usuário, permitindo que a aplicação reaja a mudanças na pesquisa.
+
+#### Props
+
+**handleSearch:** Função que recebe um termo de busca do tipo `string` e é chamada sempre que o valor do campo de busca muda. Esta função pode ser utilizada para filtrar ou buscar ferramentas conforme o usuário digita.
+
+#### Exemplo de Uso:
+
+``` tsx
+import Header from '@/app/_components/Header'
+
+const App = () => {
+  const handleSearch = (term: string) => {
+    console.log('Termo de busca:', term)
+    // Lógica para filtrar ou buscar ferramentas
+  }
+
+  return (
+    <div>
+      <Header handleSearch={handleSearch} />
+      {/* Outros componentes */}
+    </div>
+  )
+}
+
+export default App
+```
+
 ---
 
 ### Mode Toggle
-O Componente Header é um componentes gerado pelo `ShadcnUI` aonde podemos trocar o tema da aplicação
+O componente ModeToggle é um componente gerado pelo ShadcnUI que permite ao usuário alternar o tema da aplicação entre os modos claro, escuro e sistema.
 
 export const exampleCodeModeToggle = `
 
@@ -140,107 +186,137 @@ export const fileNameModeToggle = 'src/app/_componets/mode-toggle.tsx';
 
 <Code code={exampleCodeModeToggle} lang="tsx" title={fileNameModeToggle}/>
 
----
+O ModeToggle utiliza a biblioteca `next-themes` para gerenciar o tema da aplicação e os ícones `SunIcon` e `MoonIcon` da biblioteca `@radix-ui/react-icons` para representar os modos claro e escuro.
 
-## Home Page
+#### Funcionalidade
+- setTheme: Função fornecida pelo hook useTheme da biblioteca next-themes, que altera o tema da aplicação.
+- SunIcon e MoonIcon: Ícones que representam visualmente os modos claro e escuro. Eles têm classes para animações de rotação e escala que mudam dependendo do tema atual.
+#### Exemplo de Uso:
 
-import { Aside } from '@astrojs/starlight/components';
+``` tsx
+import { ModeToggle } from '@/app/_components/mode-toggle'
 
-A home é aonde está todo o nosso principal codigo, nele pegagos todos os dados e exibimos para o usuario.
-
----
-
-### Filtro de Tags
-Esse trecho do codigo renderiza todos as `tags` em componentes `Badge` clicaveis aonde podemos filtrar as ferramentas por `tags`
-
-export const exampleCodeHomeFilter = `
-import data from '@/data/techs.json'
-
-export default function Home() {
+const App = () => {
   return (
-    ...
-      {data.tags.map((tag, index) => (
-        <Link href="" key={index}>
-          <Badge className="ml-1">{tag}</Badge>
-        </Link>
-      ))}
-    ...
+    <div>
+      <ModeToggle />
+      {/* Outros componentes */}
+    </div>
   )
 }
 
-`;
-export const fileNameHomeFilter = 'src/app/_componets/page.tsx';
-
-<Code code={exampleCodeHomeFilter} lang="tsx" title={fileNameHomeFilter}/>
-
-<Aside type="caution" title="Obs!">
-  A funcionalidade de filtro ainda não está aplicada no prototipo!
-</Aside>
+export default App
+```
+Com o ModeToggle, o usuário pode facilmente alternar entre os modos claro, escuro e sistema, proporcionando uma melhor experiência de usuário com base em suas preferências de tema.
 
 ---
 
-### Exibição das Ferramentas
-Esse trecho do codigo renderiza todas as `techs` em componentes `Acoordin` do `ShadcnUI`
+## Home
+O componente Home é a página principal da aplicação, que exibe uma lista de ferramentas tecnológicas e permite ao usuário pesquisar por nome e filtrar por tags.
 
+``` tsx
+'use client'
 
-``` jsx
-<Accordion type="multiple" className="w-full space-y-6">
-  {data.techs.map((tech, index) => (
-    <div className="flex gap-8" key={index}>
-      <Image
-        alt=""
-        src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
-        width={50}
-        height={50}
-      />
+import { useState } from 'react'
+import { Badge } from '@/components/ui/badge'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
+import Image from 'next/image'
+import data from '@/data/techs.json'
+import { FileText, Github } from 'lucide-react'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import Header from '@/app/_componets/Header'
 
-      <AccordionItem value={`item-${index}`} className="w-full">
-        <AccordionTrigger>
-          <div className="text-left">
-            <div className="flex items-center gap-3">
-              <span>{tech.name} </span>
-              <Link href="">
-                <Button variant="ghost" size="icon">
-                  <FileText className="h-5" />
-                </Button>
-              </Link>
+export default function Home() {
+  const [selectedTag, setSelectedTag] = useState(null)
+  const [searchTerm, setSearchTerm] = useState('')
 
-              <Link href="">
-                <Button variant="ghost" size="icon">
-                  <Github className="h-5" />
-                </Button>
-              </Link>
+  const handleTagClick = (tag: any) => {
+    setSelectedTag(tag === selectedTag ? null : tag)
+  }
+
+  const handleSearch = (term: string) => {
+    setSearchTerm(term)
+  }
+
+  return (
+    <main className="w-[80%] mx-auto max-w-[70rem] mt-10 mb-32">
+      <Header handleSearch={handleSearch} />
+
+      <h1>
+        Total de ferramentas <span>{data.techs.length}</span>
+      </h1>
+
+      {data.tags.map((tag, index) => (
+        <Badge key={index} className="ml-1" onClick={() => handleTagClick(tag)}>
+          {tag}
+        </Badge>
+      ))}
+
+      <Accordion type="single" className="w-full space-y-6">
+      {data.techs
+          .filter((tech) => 
+            (!selectedTag || tech.tags.includes(selectedTag)) &&
+            (!searchTerm || tech.name.toLowerCase().includes(searchTerm.toLowerCase()))
+          )
+          .map((tech, index) => (
+            <div className="flex gap-8" key={index}>
+              <Image
+                alt=""
+                src={tech.image}
+                width={50}
+                height={50}
+                className="object-contain"
+              />
+
+              <AccordionItem value={`item-${index}`} className="w-full">
+                <AccordionTrigger>
+                  <div className="text-left">
+                    <div className="flex items-center gap-3">
+                      <span>{tech.name} </span>
+                      <Link href={tech.documentation} target='_blank'>
+                        <Button variant="ghost" size="icon">
+                          <FileText className="h-5" />
+                        </Button>
+                      </Link>
+
+                      <Link href={tech.github} target='_blank'>
+                        <Button variant="ghost" size="icon">
+                          <Github className="h-5" />
+                        </Button>
+                      </Link>
+                    </div>
+                    <p className="text-zinc-400">{tech.bio}</p>
+                  </div>
+                </AccordionTrigger>
+
+                <AccordionContent>{tech.description}</AccordionContent>
+
+                {tech.tags.map((tag, index) => (
+                  <Badge key={index} variant="outline" className="mb-4" onClick={() => handleTagClick(tag)}>
+                    {tag}
+                  </Badge>
+                ))}
+              </AccordionItem>
             </div>
-            <p className="text-zinc-400">{tech.bio}</p>
-          </div>
-        </AccordionTrigger>
+          ))}
+      </Accordion>
+    </main>
+  )
+}
 
-        <AccordionContent>{tech.description}</AccordionContent>
-
-        {tech.tags.map((tag, index) => (
-          <Badge key={index} variant="outline" className="mb-4">
-            {tag}
-          </Badge>
-        ))}
-      </AccordionItem>
-    </div>
-  ))}
-</Accordion>
 ```
 
-import { Steps } from '@astrojs/starlight/components';
+#### Funcionalidade
+- **useState:** Hook do React utilizado para gerenciar o estado das tags selecionadas e do termo de pesquisa.
+- **handleTagClick:** Função que alterna a tag selecionada. Se a tag clicada for a mesma que a atualmente selecionada, a seleção é desfeita; caso contrário, a nova tag é selecionada.
+- **handleSearch:** Função que atualiza o termo de pesquisa baseado na entrada do usuário.
 
-<Steps>
-
-1. O compoennte `Accordion` engloba todos os componentes `AccordionItem`
-
-2. Faz um `map` em cada `tech` dos dados renderizando seus dados
-
-   ```js
-    {data.techs.map((tech, index) => (
-      ...
-    ))}
-   ```
-
-
-</Steps>
+#### Filtragem
+- **Filtro por Tag:** As ferramentas são filtradas para incluir apenas aquelas que possuem a tag selecionada.
+- **Filtro por Termo de Pesquisa:** As ferramentas são filtradas para incluir apenas aquelas cujo nome contém o termo de pesquisa.

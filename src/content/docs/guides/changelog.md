@@ -14,3 +14,9 @@ title: Histórico de Alterações
 - Correção de bugs
 
 
+## Versão 1.2.0 (3 de junho de 2024)
+
+- Filtro pesquisa
+- Filtro por tags
+
+
