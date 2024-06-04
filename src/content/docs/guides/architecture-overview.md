@@ -14,7 +14,8 @@ A arquitetura do sistema é baseada em um frontend desenvolvido em Next.js, que 
 ### Diagrama Entidade-Relacionamento (ER)
 
 O diagrama ER abaixo representa as principais entidades e seus relacionamentos no sistema:
-![diagrama entidade](https://dhg1h5j42swfq.cloudfront.net/2021/05/10192407/image-226.png)
+
+![DER](../../../assets/der.png)
 
 ### Modelo de Banco de Dados
 
