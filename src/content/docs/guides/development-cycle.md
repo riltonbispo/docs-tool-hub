@@ -54,25 +54,22 @@ Durante o desenvolvimento, a equipe trabalhou de acordo com as tarefas definidas
 
 1. Criação de Home da aplicação
 2. Sistema de troca de tema
-3. Adição de ferramentas nos dados
-4. Configuração geral da aplicação
-5. Design do sistema.
+3. Configuração geral da aplicação
+4. Design do sistema.
+5. Busca de ferramentas
+6. Filtro por `tag`
 
 
 ## Desafios e Lições Aprendidas 
 
 ### Desafios 
 
-1. Categorização das Ferramentas: Definir categorias claras e abrangentes foi um desafio devido à diversidade de ferramentas.
-2. Implementação da Barra de Pesquisa: Criar um algoritmo de busca eficiente e rápido exigiu várias iterações e otimizações.
+1. Implementação da Barra de Pesquisa: Criar um algoritmo de busca eficiente e rápido exigiu várias iterações e otimizações.
 
 ### Lições Aprendidas 
 
 1. Importância do Planejamento: Planejar cada sprint foi de suma importância para o sucesso do projeto. 
-2. Colaboração e Comunicação: Reuniões diárias e transparência no progresso ajudaram a resolver impedimentos rapidamente.
-3. Ferramenta Adequada: O uso do Trello facilitou a organização e o acompanhamento de toda tarefa realizada.
-
-
+2. Colaboração e Comunicação: Reuniões e transparência no progresso ajudaram a resolver impedimentos rapidamente.
 
 ## Ferramentas Utilizadas
 
