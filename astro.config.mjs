@@ -10,7 +10,7 @@ export default defineConfig({
 		starlight({
 			title: 'ToolHub',
 			social: {
-				github: 'https://github.com/seu-usuario/nome-do-repositorio',
+				github: 'https://github.com/riltonbispo/docs-tool-hub',
 			},
 			sidebar: [
 				{

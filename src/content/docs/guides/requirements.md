@@ -16,7 +16,7 @@ Siga os passos abaixo para instalar e configurar a plataforma:
 
 1. **Clone o repositório**: 
 ``` bash
-   git clone https://github.com/seu-usuario/tool-hub.git
+   git clone https://github.com/riltonbispo/tool-hub
 ```
 
 2. **Instale as dependências**:
