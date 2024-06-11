@@ -75,6 +75,9 @@ Durante o desenvolvimento, a equipe trabalhou de acordo com as tarefas definidas
 
 - **Trello**: Utilizamos o Trello para gerenciar nosso backlog de histórias de usuário, organizar as tarefas em cada sprint e acompanhar o progresso do desenvolvimento.
 
+![Imagem do Trello](../../../assets/trello.png)
+
+
 ---
 
 ## Conclusão
